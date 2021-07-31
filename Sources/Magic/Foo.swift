@@ -7,6 +7,6 @@
 
 @_exported import SpriteKit
 
-struct testNode {
+public struct testNode {
     var a = SKNode()
 }
