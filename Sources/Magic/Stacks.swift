@@ -21,14 +21,14 @@ public extension Stackable {
 }
 
 
-public class HStack: SKNode, Stackable {
-    public var orderedChildren: [SKNode] = []
+open class HStack: SKNode, Stackable {
+    open var orderedChildren: [SKNode] = []
     
     override init() {
         super.init()
         print("HUH?")
     }
-    public required init(nodes: [SKNode]) {
+    required public init(nodes: [SKNode]) {
         super.init()
         orderedChildren = nodes
         for i in nodes {
@@ -37,7 +37,7 @@ public class HStack: SKNode, Stackable {
         repositionNodes()
     }
     
-    public func repositionNodes() {
+    open func repositionNodes() {
         var maxXo: CGFloat = 0
         for i in orderedChildren {
             i.centerAt(point: .zero)
@@ -47,12 +47,12 @@ public class HStack: SKNode, Stackable {
         }
     }
     
-    public func append(nodes: [SKNode]) {
+    open func append(nodes: [SKNode]) {
         for i in nodes { addChild(i) }
         orderedChildren += nodes
         self.repositionNodes()
     }
-    public func prepend(nodes: [SKNode]) {
+    open func prepend(nodes: [SKNode]) {
         for i in nodes { addChild(i) }
         orderedChildren = nodes + orderedChildren
         self.repositionNodes()
@@ -64,8 +64,8 @@ public class HStack: SKNode, Stackable {
     }
 }
 
-public class VStack: SKNode, Stackable {
-    public var orderedChildren: [SKNode] = []
+open class VStack: SKNode, Stackable {
+    open var orderedChildren: [SKNode] = []
     
     public override init() {
         super.init()
@@ -80,7 +80,7 @@ public class VStack: SKNode, Stackable {
         repositionNodes()
     }
     
-    public func repositionNodes() {
+    open func repositionNodes() {
         var maxXo: CGFloat = 0
         for i in orderedChildren {
             i.centerAt(point: .zero)
@@ -90,19 +90,19 @@ public class VStack: SKNode, Stackable {
         }
     }
     
-    public func append(nodes: [SKNode]) {
+    open func append(nodes: [SKNode]) {
         for i in nodes { addChild(i) }
         orderedChildren += nodes
         self.repositionNodes()
     }
-    public func prepend(nodes: [SKNode]) {
+    open func prepend(nodes: [SKNode]) {
         for i in nodes { addChild(i) }
         orderedChildren = nodes + orderedChildren
         self.repositionNodes()
     }
     
     
-    required init?(coder aDecoder: NSCoder) {
+    required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 }

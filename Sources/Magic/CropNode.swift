@@ -5,26 +5,26 @@
 //  Created by Jonathan Pappas on 7/31/21.
 //
 
-public class SKSceneNode: SKCropNode {
-    public var size: CGSize { .init(width: width, height: height) }
-    public var minPoint: CGPoint { .init(x: parent!.position.x - size.halved.width, y: parent!.position.y - size.halved.height) }
-    public var width: CGFloat = 0
-    public var height: CGFloat = 0
-    public func touchedInside(_ point: CGPoint) -> Bool {
+open class SKSceneNode: SKCropNode {
+    open var size: CGSize { .init(width: width, height: height) }
+    open var minPoint: CGPoint { .init(x: parent!.position.x - size.halved.width, y: parent!.position.y - size.halved.height) }
+    open var width: CGFloat = 0
+    open var height: CGFloat = 0
+    open func touchedInside(_ point: CGPoint) -> Bool {
         return CGRect(origin: minPoint, size: size).contains(point)
     }
     
-    public func begin() {}
-    public func touchesBegan(_ at: CGPoint, nodes: [SKNode]) {}
-    public func touchesMoved(_ at: CGVector) {}
-    public func touchesEnded(_ at: CGPoint, release: CGVector) {}
-    public var draggable = true
+    open func begin() {}
+    open func touchesBegan(_ at: CGPoint, nodes: [SKNode]) {}
+    open func touchesMoved(_ at: CGVector) {}
+    open func touchesEnded(_ at: CGPoint, release: CGVector) {}
+    open var draggable = true
 }
 
 
 
-public extension SKCropNode {
-    func backgroundColor(_ acolor: NSColor) {
+extension SKCropNode {
+    open func backgroundColor(_ acolor: NSColor) {
         childNode(withName: "_bg_")?.removeFromParent()
         let bg = SKSpriteNode.init(color: acolor, size: maskNode?.calculateAccumulatedFrame().size.doubled ?? .zero)
         bg.position = maskNode?.position ?? .zero
@@ -32,7 +32,7 @@ public extension SKCropNode {
         bg.zPosition = -.infinity
         addChild(bg)
     }
-    static func Circle(radius: CGFloat, doThis: ((SKShapeNode) -> ())? = nil) -> Self {
+    public static func Circle(radius: CGFloat, doThis: ((SKShapeNode) -> ())? = nil) -> Self {
         let cropper = Self.init()
         if let c = cropper as? SKSceneNode {
             c.width = radius*2
@@ -45,7 +45,7 @@ public extension SKCropNode {
         cropper.maskNode = uwu
         return cropper
     }
-    static func RoundRect(width: CGFloat, height: CGFloat, corner: CGFloat, doThis: ((SKShapeNode) -> ())? = nil) -> Self {
+    public static func RoundRect(width: CGFloat, height: CGFloat, corner: CGFloat, doThis: ((SKShapeNode) -> ())? = nil) -> Self {
         let cropper = Self.init()
         if let c = cropper as? SKSceneNode {
             c.width = width
@@ -69,7 +69,7 @@ public extension SKCropNode {
         
         return cropper
     }
-    static func Rect(width: CGFloat, height: CGFloat, doThis: ((SKSpriteNode) -> ())? = nil) -> Self {
+    public static func Rect(width: CGFloat, height: CGFloat, doThis: ((SKSpriteNode) -> ())? = nil) -> Self {
         let cropper = Self.init()
         
         if let c = cropper as? SKSceneNode {

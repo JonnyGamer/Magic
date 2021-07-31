@@ -11,16 +11,16 @@ open class HostingScene: SKScene {
         self.init(size: .init(width: w, height: h))
     }
     
-    public var magicCamera: SKCameraNode!
-    public var c: [SKNode] = []
+    open var magicCamera: SKCameraNode!
+    open var c: [SKNode] = []
     
-    public var width: CGFloat { frame.size.width }
-    public var height: CGFloat { frame.size.height }
+    open var width: CGFloat { frame.size.width }
+    open var height: CGFloat { frame.size.height }
     
     public static var screens: Int = 4
-    public var launchScene: SKSceneNode.Type!// = Scene1.self
+    open var launchScene: SKSceneNode.Type!// = Scene1.self
     
-    public override func didMove(to view: SKView) {
+    open override func didMove(to view: SKView) {
         if #available(macOS 10.11, *) {
             magicCamera = SKCameraNode()
             camera = magicCamera
@@ -59,25 +59,25 @@ open class HostingScene: SKScene {
     }
     
 
-    public func keepInsideScene(_ node: SKNode) {
+    open func keepInsideScene(_ node: SKNode) {
         let nodeSize = node.calculateAccumulatedFrame()
         node.setScale(min((size.width / nodeSize.width) * node.xScale, (size.height / nodeSize.height) * node.yScale))
     }
 
-    public var velocity: CGVector = .zero
-    public var previous: CGPoint = .zero
-    public var dragged = false
-    public var touching: [SKNode] = []
+    open var velocity: CGVector = .zero
+    open var previous: CGPoint = .zero
+    open var dragged = false
+    open var touching: [SKNode] = []
     
     
     
     
     // Touch Down
     #if os(iOS)
-    public var touchers: [UITouch:[SKNode]] = [:]
-    public var touchBegan: UITouch!
+    open var touchers: [UITouch:[SKNode]] = [:]
+    open var touchBegan: UITouch!
     
-    public override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+    open override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         for i in touches {
             if i.phase == .began {
                 //UITouch.thirdPrevious[i] = i.previousLocation(in: self) // YES backup
@@ -89,13 +89,13 @@ open class HostingScene: SKScene {
         }
     }
     #elseif os(macOS)
-    public override func mouseDown(with event: NSEvent) {
+    open override func mouseDown(with event: NSEvent) {
         let loc = event.location(in: self)
         genericTouchesBegan(loc: loc)
     }
     #endif
     // Generic Touch Down
-    public func genericTouchesBegan(loc: CGPoint) {
+    open func genericTouchesBegan(loc: CGPoint) {
         previous = loc
         dragged = false
         for c1 in c {
@@ -117,11 +117,11 @@ open class HostingScene: SKScene {
             panning = []
         }
     }
-    public var panning: [SKNode] = []
+    open var panning: [SKNode] = []
     
     // Dragging
     #if os(iOS)
-    public override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
+    open override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
         for (i,o) in touchers {
             if i.phase == .moved || i.phase == .stationary {
                 touching = o
@@ -131,14 +131,14 @@ open class HostingScene: SKScene {
         }
     }
     #elseif os(macOS)
-    public override func mouseDragged(with event: NSEvent) {
+    open override func mouseDragged(with event: NSEvent) {
         let loc = event.location(in: self)
         velocity = .init(dx: loc.x - previous.x, dy: loc.y - previous.y)
         genericTouchesMoved()
         previous = loc
     }
     #endif
-    public func genericTouchesMoved() {
+    open func genericTouchesMoved() {
         dragged = true
         for i in touching {
             guard let io = (i.children.first as? SKSceneNode) else { continue }
@@ -154,7 +154,7 @@ open class HostingScene: SKScene {
     
     // Touches Ended
     #if os(iOS)
-    public override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+    open override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         for (i,o) in touchers {
             if i.phase == .ended || i.phase == .cancelled {
                 touching = o
@@ -174,12 +174,12 @@ open class HostingScene: SKScene {
         }
     }
     #elseif os(macOS)
-    public override func mouseUp(with event: NSEvent) {
+    open override func mouseUp(with event: NSEvent) {
         let loc = event.location(in: self)
         genericTouchEnded(loc: loc, velocity: .zero)
     }
     #endif
-    public func genericTouchEnded(loc: CGPoint, velocity: CGVector) {
+    open func genericTouchEnded(loc: CGPoint, velocity: CGVector) {
         //if dragged {
             let uwu = SKAction.move(by: velocity.times(10), duration: 0.5)
             uwu.timingFunction = SineEaseOut(_:)
