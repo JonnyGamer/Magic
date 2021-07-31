@@ -6,7 +6,7 @@
 //
 
 @available(macOS 10.11, *)
-public class HostingScene: SKScene {
+open class HostingScene: SKScene {
     public convenience init (from: Bool) {
         self.init(size: .init(width: w, height: h))
     }
