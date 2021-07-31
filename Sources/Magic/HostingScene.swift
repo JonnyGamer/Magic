@@ -5,12 +5,12 @@
 //  Created by Jonathan Pappas on 7/31/21.
 //
 
+@available(macOS 10.11, *)
 public class HostingScene: SKScene {
     public convenience init (from: Bool) {
         self.init(size: .init(width: w, height: h))
     }
     
-    @available(macOS 10.11, *)
     public var magicCamera: SKCameraNode!
     public var c: [SKNode] = []
     
