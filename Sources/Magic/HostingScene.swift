@@ -10,6 +10,7 @@ public class HostingScene: SKScene {
         self.init(size: .init(width: w, height: h))
     }
     
+    @available(macOS 10.11, *)
     public var magicCamera: SKCameraNode!
     public var c: [SKNode] = []
     
@@ -20,9 +21,13 @@ public class HostingScene: SKScene {
     public var launchScene: SKSceneNode.Type!// = Scene1.self
     
     public override func didMove(to view: SKView) {
-        magicCamera = SKCameraNode()
-        camera = magicCamera
-        addChild(magicCamera)
+        if #available(macOS 10.11, *) {
+            magicCamera = SKCameraNode()
+            camera = magicCamera
+            addChild(magicCamera)
+        } else {
+            print("WARNING: Somehow the MAGIC_CAMERA did not work. MacOS 10.11")
+        }
         backgroundColor = .black
         
         var playerDesign: [(CGFloat,CGFloat,CGFloat,CGFloat,CGFloat)] = []
