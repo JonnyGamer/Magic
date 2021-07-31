@@ -5,37 +5,6 @@
 //  Created by Jonathan Pappas on 5/12/21.
 //
 
-@_exported import SpriteKit
-
-
-public extension CGSize {
-    static var hundred: Self { .init(width: 100, height: 100) }
-    var doubled: Self { .init(width: width*2, height: height*2) }
-    var halved: Self { .init(width: width/2, height: height/2) }
-    func padding(_ with: CGFloat) -> Self {
-        return .init(width: self.width + with, height: self.height + with)
-    }
-}
-public extension SKNode {
-    var copied: SKNode {
-        return self.copy() as! SKNode
-    }
-    func centerAt(point: CGPoint) {
-        position = point
-        let whereThis = calculateAccumulatedFrame()
-        position.x += point.x - whereThis.midX
-        position.y += point.y - whereThis.midY
-    }
-    var padding: SKNode {
-        let oldScale = (self.xScale, self.yScale)
-        setScale(1)
-        let newNode = SKSpriteNode.init(color: .white, size: self.calculateAccumulatedFrame().size.padding(20))
-        addChild(newNode)
-        (xScale, yScale) = oldScale
-        newNode.alpha = 0
-        return self
-    }
-}
 
 
 public protocol Stackable {
