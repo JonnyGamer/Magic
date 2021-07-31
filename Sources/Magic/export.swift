@@ -11,4 +11,5 @@
 public typealias NSColor = UIColor
 #endif
 
-var (w, h): (CGFloat, CGFloat) = (1000, 1000)
+public var w: CGFloat = 1000
+public var h: CGFloat = 1000

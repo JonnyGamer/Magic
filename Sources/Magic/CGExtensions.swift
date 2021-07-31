@@ -8,7 +8,7 @@
 
 
 public extension CGPoint {
-    //static var midScreen: Self { .init(x: w/2, y: h/2) }
+    static var midScreen: Self { .init(x: w/2, y: h/2) }
     static var half: Self { .init(x: 0.5, y: 0.5) }
 }
 public extension CGSize {
