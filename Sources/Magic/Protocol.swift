@@ -55,6 +55,7 @@ public extension HostingNode {
     
     func _begin() {
         var playerDesign: [(CGFloat,CGFloat,CGFloat,CGFloat,CGFloat)] = []
+        print(width, height)
         
         if screens == 1 { playerDesign = [(width,height,0,0,1)] }
         if screens == 2 { playerDesign = [(width/2, height, -width/4, 0,1), (width/2, height, width/4, 0,1)] }
