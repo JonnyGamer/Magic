@@ -16,8 +16,10 @@
     var dragged: Bool { get set }
     var touching: [SKNode] { get set }
     
+    #if os(iOS)
     var touchers: [UITouch:[SKNode]]  { get set }
     var touchBegan: UITouch! { get set }
+    #endif
     
     var panning: [SKNode]  { get set }
     
@@ -94,7 +96,7 @@ public extension HostingNode {
     #elseif os(macOS)
     func _mouseDown(with event: NSEvent) {
         velocity = .zero
-        let loc = event.location(in: self)
+        let loc = event.location(in: self as! SKNode)
         genericTouchesBegan(loc: loc)
     }
     #endif
@@ -135,8 +137,8 @@ public extension HostingNode {
         }
     }
     #elseif os(macOS)
-    override func _mouseDragged(with event: NSEvent) {
-        let loc = event.location(in: self)
+    func _mouseDragged(with event: NSEvent) {
+        let loc = event.location(in: self as! SKNode)
         velocity = .init(dx: loc.x - previous.x, dy: loc.y - previous.y)
         genericTouchesMoved()
         previous = loc
@@ -178,8 +180,8 @@ public extension HostingNode {
         }
     }
     #elseif os(macOS)
-    override func mouseUp(with event: NSEvent) {
-        let loc = event.location(in: self)
+    func _mouseUp(with event: NSEvent) {
+        let loc = event.location(in: self as! SKNode)
         genericTouchEnded(loc: loc, velocity: velocity)
     }
     #endif

@@ -71,10 +71,34 @@ open class HostingScene: SKScene, HostingNode {
     open var dragged: Bool = false
     open var touching: [SKNode] = []
     
+    #if os(iOS)
     open var touchers: [UITouch:[SKNode]] = [:]
     open var touchBegan: UITouch!
+    #endif
     
     open var panning: [SKNode] = []
+    
+    #if os(iOS)
+    open override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        _touchesBegan(touches, with: event)
+    }
+    open override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
+        _touchesMoved(touches, with: event)
+    }
+    open override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+        _touchesEnded(touches, with: event)
+    }
+    #elseif os(macOS)
+    open override func mouseUp(with event: NSEvent) {
+        _mouseUp(with: event)
+    }
+    open override func mouseDown(with event: NSEvent) {
+        _mouseDown(with: event)
+    }
+    open override func mouseDragged(with event: NSEvent) {
+        _mouseDragged(with: event)
+    }
+    #endif
 }
 
 
