@@ -66,8 +66,8 @@ public extension HostingNode {
                 $0.position = .zero
             }
             cropper.yScale *= i.4
-            cropper.position.x = i.2
-            cropper.position.y = i.3
+            cropper.position.x = i.2 + (size.width/2)
+            cropper.position.y = i.3 + (size.height/2)
             addChild(cropper)
             //cropper.maskNode?.alpha = 0.5
             cropper.framed(.darkGray)
