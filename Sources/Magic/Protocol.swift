@@ -67,8 +67,14 @@ public extension HostingNode {
         }
         
         for i in playerDesign {
-            if launchScene == nil { continue }
-            let cropper = launchScene.Rect(width: i.0-20, height: i.1-20) {
+            let woo1 = ((self as? SKNode)?.parent as? HostingNode)?.launchScene
+            let woo2 = ((self as? SKNode)?.parent as? MagicHostingNode)?.launchScene
+            let trueLauncher: SKSceneNode.Type! = woo1 ?? woo2
+            print(trueLauncher)
+            //print((self as? HostingNode)?.launchScene))
+            //print((self as? MagicHostingNode)?.launchScene)
+            if trueLauncher == nil { continue }
+            let cropper = trueLauncher.Rect(width: i.0-20, height: i.1-20) {
                 $0.position = .zero
             }
             cropper.yScale *= i.4
