@@ -5,6 +5,11 @@
 //  Created by Jonathan Pappas on 8/3/21.
 //
 
+#if os(macOS)
+public typealias UITouch = Int
+public typealias UIEvent = NSEvent
+#endif
+
 
 @objc public protocol HostingNode {
     var c: [SKNode] { get set }
@@ -89,7 +94,7 @@ public extension HostingNode {
                 // Remember which finger touched what
                 touchBegan = i
                 touchers[i] = []
-                genericTouchesBegan(loc: i.location(in: self as! SKNode))
+                genericTouchesBegan(loc: i.location(in: self as! SKNode), touches, with: event)
             }
         }
     }
@@ -97,11 +102,11 @@ public extension HostingNode {
     func _mouseDown(with event: NSEvent) {
         velocity = .zero
         let loc = event.location(in: self as! SKNode)
-        genericTouchesBegan(loc: loc)
+        genericTouchesBegan(loc: loc, [], with: event)
     }
     #endif
     // Generic Touch Down
-    func genericTouchesBegan(loc: CGPoint) {
+    func genericTouchesBegan(loc: CGPoint,_ touches: Set<UITouch>, with event: UIEvent?) {
         previous = loc
         dragged = false
         for c1 in c {
@@ -112,6 +117,13 @@ public extension HostingNode {
                 #endif
                 touching.append(c1)
                 io.touchesBegan(.zero, nodes: (self as! SKNode).nodes(at: loc))
+            }
+            if let io = io as? HostingNode {
+                #if os(iOS)
+                io._touchesBegan(touches, with: event)
+                #elseif os(macOS)
+                io._mouseDown(with: event!)
+                #endif
             }
         }
         // Zoom Out ;)
@@ -132,7 +144,7 @@ public extension HostingNode {
             if i.phase == .moved || i.phase == .stationary {
                 touching = o
                 velocity = i.velocityIn(self as! SKNode)
-                genericTouchesMoved()
+                genericTouchesMoved(touches, with: event)
             }
         }
     }
@@ -140,15 +152,22 @@ public extension HostingNode {
     func _mouseDragged(with event: NSEvent) {
         let loc = event.location(in: self as! SKNode)
         velocity = .init(dx: loc.x - previous.x, dy: loc.y - previous.y)
-        genericTouchesMoved()
+        genericTouchesMoved([], with: event)
         previous = loc
     }
     #endif
-    func genericTouchesMoved() {
+    func genericTouchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
         dragged = true
         for i in touching {
             guard let io = (i.children.first as? SKSceneNode) else { continue }
             io.touchesMoved(velocity.chechForYInverse(io.yScale))
+            if let io = io as? HostingNode {
+                #if os(iOS)
+                io._touchesMoved(touches, with: event)
+                #elseif os(macOS)
+                io._mouseDragged(with: event!)
+                #endif
+            }
         }
         for i in panning {
             guard let io = (i.children.first as? SKSceneNode) else { continue }
@@ -166,7 +185,7 @@ public extension HostingNode {
                 touching = o
                 //print(i.velocityIn(self), i.releaseVelocity(self))
                 velocity = i.velocityIn(self as! SKNode)
-                genericTouchEnded(loc: i.location(in: self as! SKNode), velocity: velocity)
+                genericTouchEnded(loc: i.location(in: self as! SKNode), velocity: velocity, touches, with: event)
                 touchers[i] = nil
                 //UITouch.thirdPrevious[i] = nil
             }
@@ -182,10 +201,10 @@ public extension HostingNode {
     #elseif os(macOS)
     func _mouseUp(with event: NSEvent) {
         let loc = event.location(in: self as! SKNode)
-        genericTouchEnded(loc: loc, velocity: velocity)
+        genericTouchEnded(loc: loc, velocity: velocity, [], with: event)
     }
     #endif
-    func genericTouchEnded(loc: CGPoint, velocity: CGVector) {
+    func genericTouchEnded(loc: CGPoint, velocity: CGVector,_ touches: Set<UITouch>, with event: UIEvent?) {
         //if dragged {
             let uwu = SKAction.move(by: velocity.times(10), duration: 0.5)
             uwu.timingFunction = SineEaseOut(_:)
@@ -196,6 +215,14 @@ public extension HostingNode {
                 
                 if io.draggable {
                     i.run(uwu)
+                }
+                
+                if let io = io as? HostingNode {
+                    #if os(iOS)
+                    io._touchesEnded(touches, with: event)
+                    #elseif os(macOS)
+                    io._mouseUp(with: event!)
+                    #endif
                 }
             }
         //}
