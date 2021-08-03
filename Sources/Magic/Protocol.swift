@@ -66,11 +66,12 @@ public extension HostingNode {
             
         }
         
+        let woo1 = ((self as? SKNode)?.parent as? HostingNode)?.launchScene
+        let woo2 = ((self as? SKNode)?.parent as? MagicHostingNode)?.launchScene
+        let trueLauncher: SKSceneNode.Type! = woo1 ?? woo2 ?? launchScene
+        print(trueLauncher)
+        
         for i in playerDesign {
-            let woo1 = ((self as? SKNode)?.parent as? HostingNode)?.launchScene
-            let woo2 = ((self as? SKNode)?.parent as? MagicHostingNode)?.launchScene
-            let trueLauncher: SKSceneNode.Type! = woo1 ?? woo2
-            print(trueLauncher)
             //print((self as? HostingNode)?.launchScene))
             //print((self as? MagicHostingNode)?.launchScene)
             if trueLauncher == nil { continue }
