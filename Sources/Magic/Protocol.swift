@@ -28,7 +28,7 @@ public typealias UIEvent = NSEvent
     
     var panning: [SKNode]  { get set }
     
-    static var screens: Int { get set }
+    var screens: Int { get set }
     var launchScene: SKSceneNode.Type! { get set }
     var width: CGFloat { get }
     var height: CGFloat { get }
@@ -56,10 +56,10 @@ public extension HostingNode {
     func _begin() {
         var playerDesign: [(CGFloat,CGFloat,CGFloat,CGFloat,CGFloat)] = []
         
-        if Self.screens == 1 { playerDesign = [(width,height,0,0,1)] }
-        if Self.screens == 2 { playerDesign = [(width/2, height, -width/4, 0,1), (width/2, height, width/4, 0,1)] }
-        if Self.screens == 3 { playerDesign = [(width/3, height, -width/3, 0,1), (width/3, height, 0, 0,-1), (width/3, height, width/3, 0,1)] }
-        if Self.screens == 4 {
+        if screens == 1 { playerDesign = [(width,height,0,0,1)] }
+        if screens == 2 { playerDesign = [(width/2, height, -width/4, 0,1), (width/2, height, width/4, 0,1)] }
+        if screens == 3 { playerDesign = [(width/3, height, -width/3, 0,1), (width/3, height, 0, 0,-1), (width/3, height, width/3, 0,1)] }
+        if screens == 4 {
             //playerDesign = [(width/4, 1000, -3*width/8, 0), (width/4, 1000, -width/8, 0), (width/4, 1000, width/8, 0), (width/4, 1000, 3*width/8, 0)]
             
             playerDesign = [(width/2, height/2, -width/4, -height/4,1), (width/2, height/2, width/4, -height/4,1), (width/2, height/2, -width/4, height/4,-1), (width/2, height/2, width/4, height/4,-1)]

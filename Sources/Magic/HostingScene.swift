@@ -11,6 +11,10 @@ open class MagicHostingNode: SKSceneNode, HostingNode {
         backgroundColor(.black)
         _begin()
     }
+    convenience init (screens: Int) {
+        self.init()
+        self.screens = screens
+    }
     
     open var velocity: CGVector = .zero
     open var previous: CGPoint = .zero
@@ -28,7 +32,7 @@ open class MagicHostingNode: SKSceneNode, HostingNode {
         get { super.size }
     }
     
-    public static var screens: Int = 4
+    public var screens: Int = 4
     open var launchScene: SKSceneNode.Type!// = Scene1.self
     
     
@@ -65,8 +69,9 @@ open class MagicHostingNode: SKSceneNode, HostingNode {
 
 //@available(macOS 10.11, *)
 open class HostingScene: SKScene, HostingNode {
-    public convenience init (from: Bool) {
+    public convenience init (screens: Int) {
         self.init(size: .init(width: w, height: h))
+        self.screens = screens
     }
     
     open var c: [SKNode] = []
@@ -74,7 +79,7 @@ open class HostingScene: SKScene, HostingNode {
     open var width: CGFloat { frame.size.width }
     open var height: CGFloat { frame.size.height }
     
-    public static var screens: Int = 4
+    public var screens: Int = 4
     open var launchScene: SKSceneNode.Type!// = Scene1.self
     
     open override func didMove(to view: SKView) {
