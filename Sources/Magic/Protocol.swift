@@ -67,6 +67,7 @@ public extension HostingNode {
         }
         
         for i in playerDesign {
+            if launchScene == nil { continue }
             let cropper = launchScene.Rect(width: i.0-20, height: i.1-20) {
                 $0.position = .zero
             }
@@ -77,9 +78,9 @@ public extension HostingNode {
             //cropper.maskNode?.alpha = 0.5
             cropper.framed(.darkGray)
             c.append(cropper.parent!)
-            if let cr = cropper as? MagicHostingNode {
-                cr.launchScene = launchScene
-            }
+            //if let cr = cropper as? MagicHostingNode {
+            //    cr.launchScene = Self.self
+            //}
             cropper.begin()
         }
     }
