@@ -122,7 +122,7 @@ public extension HostingNode {
                 touching.append(c1)
                 io.touchesBegan(.zero, nodes: (self as! SKNode).nodes(at: loc))
             }
-            if let io = io as? HostingNode {
+            if let io = io as? MagicHostingNode {
                 #if os(iOS)
                 io._touchesBegan(touches, with: event)
                 #elseif os(macOS)
@@ -165,7 +165,7 @@ public extension HostingNode {
         for i in touching {
             guard let io = (i.children.first as? SKSceneNode) else { continue }
             io.touchesMoved(velocity.chechForYInverse(io.yScale))
-            if let io = io as? HostingNode {
+            if let io = io as? MagicHostingNode {
                 #if os(iOS)
                 io._touchesMoved(touches, with: event)
                 #elseif os(macOS)
@@ -221,7 +221,7 @@ public extension HostingNode {
                     i.run(uwu)
                 }
                 
-                if let io = io as? HostingNode {
+                if let io = io as? MagicHostingNode {
                     #if os(iOS)
                     io._touchesEnded(touches, with: event)
                     #elseif os(macOS)
