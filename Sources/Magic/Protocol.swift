@@ -77,6 +77,9 @@ public extension HostingNode {
             //cropper.maskNode?.alpha = 0.5
             cropper.framed(.darkGray)
             c.append(cropper.parent!)
+            if let cr = cropper as? MagicHostingNode {
+                cr.launchScene = launchScene
+            }
             cropper.begin()
         }
     }
