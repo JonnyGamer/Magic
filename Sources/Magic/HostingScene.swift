@@ -90,6 +90,7 @@ open class HostingScene: SKScene {
     }
     #elseif os(macOS)
     open override func mouseDown(with event: NSEvent) {
+        velocity = .zero
         let loc = event.location(in: self)
         genericTouchesBegan(loc: loc)
     }
