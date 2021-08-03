@@ -124,9 +124,9 @@ public extension HostingNode {
             }
             if let io = io as? MagicHostingNode {
                 #if os(iOS)
-                io._touchesBegan(touches, with: event)
+                io.touchesBegan(touches, with: event)
                 #elseif os(macOS)
-                io._mouseDown(with: event!)
+                io.mouseDown(with: event!)
                 #endif
             }
         }
@@ -167,9 +167,9 @@ public extension HostingNode {
             io.touchesMoved(velocity.chechForYInverse(io.yScale))
             if let io = io as? MagicHostingNode {
                 #if os(iOS)
-                io._touchesMoved(touches, with: event)
+                io.touchesMoved(touches, with: event)
                 #elseif os(macOS)
-                io._mouseDragged(with: event!)
+                io.mouseDragged(with: event!)
                 #endif
             }
         }
@@ -223,9 +223,9 @@ public extension HostingNode {
                 
                 if let io = io as? MagicHostingNode {
                     #if os(iOS)
-                    io._touchesEnded(touches, with: event)
+                    io.touchesEnded(touches, with: event)
                     #elseif os(macOS)
-                    io._mouseUp(with: event!)
+                    io.mouseUp(with: event!)
                     #endif
                 }
             }
