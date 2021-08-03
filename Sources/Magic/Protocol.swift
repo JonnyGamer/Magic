@@ -75,6 +75,8 @@ public extension HostingNode {
             //print((self as? HostingNode)?.launchScene))
             //print((self as? MagicHostingNode)?.launchScene)
             if trueLauncher == nil { continue }
+            if i.0 == 0 { continue } // negative size node
+            
             let cropper = trueLauncher.Rect(width: i.0-20, height: i.1-20) {
                 $0.position = .zero
             }
