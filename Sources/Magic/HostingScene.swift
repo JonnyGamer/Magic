@@ -176,7 +176,7 @@ open class HostingScene: SKScene {
     #elseif os(macOS)
     open override func mouseUp(with event: NSEvent) {
         let loc = event.location(in: self)
-        genericTouchEnded(loc: loc, velocity: .zero)
+        genericTouchEnded(loc: loc, velocity: velocity)
     }
     #endif
     open func genericTouchEnded(loc: CGPoint, velocity: CGVector) {
