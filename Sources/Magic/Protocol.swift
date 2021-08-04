@@ -132,7 +132,7 @@ public extension HostingNode {
                 touchers[touchBegan]?.append(c1)
                 #endif
                 touching.append(c1)
-                io.touchesBegan(.zero, nodes: (self as! SKNode).nodes(at: loc))
+                io.touchesBegan(loc, nodes: (self as! SKNode).nodes(at: loc))
             }
             if let io = io as? MagicHostingNode {
                 #if os(iOS)
