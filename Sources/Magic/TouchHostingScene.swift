@@ -67,11 +67,15 @@ public extension HostingScene {
         let text = SKLabelNode.init(text: string.reduce("") { $0 + "\n" + $1 })
         text.text?.removeFirst()
         text.fontName = "Hand"
+        #if os(macOS)
         if #available(macOS 10.13, *) {
             text.numberOfLines = text.text?.split(separator: "\n").count ?? 1
-        } else {
-            // Fallback on earlier versions
         }
+        #elseif os(iOS)
+        if #available(iOS 11.0, *) {
+            text.numberOfLines = text.text?.split(separator: "\n").count ?? 1
+        }
+        #endif
         text.horizontalAlignmentMode = .center
         text.verticalAlignmentMode = .center
         addChild(text)
