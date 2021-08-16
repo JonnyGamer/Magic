@@ -72,7 +72,7 @@ open class TouchHostingScene: HostingScene {
     
     open override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) { touchesReallyEnded(touches, with: event) }
     open override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) { touchesReallyEnded(touches, with: event) }
-    @objc open func touchesReallyEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+    @objc dynamic open func touchesReallyEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         for i in touches {
             if i.phase == .ended || i.phase == .cancelled, let originallyTouched = touched[i], let starting = iStartingPos[i] {
                 
