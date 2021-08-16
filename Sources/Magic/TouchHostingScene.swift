@@ -42,22 +42,49 @@ open class TouchHostingScene: HostingScene {
     #endif
     
     #if os(iOS)
-    open override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        let nodesTouched = nodes(at: touches.first?.location(in: self) ?? .zero)
-        nodesTouched.touchBegan()
-        self.nodesTouched += nodesTouched
-    }
-//    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
-//        let nodesTouched = nodes(at: touches.first?.location(in: self) ?? .zero)
-//        nodesTouched.touchBegan()
-//        self.nodesTouched += nodesTouched
-//    }
+    var touched: [UITouch:[SKNode]] = [:]
+    var iStartingPos: [UITouch:CGPoint] = [:]
+    var iCurrentPos: [UITouch:CGPoint] = [:]
     
-    open override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        let nodesEndedOn = nodes(at: touches.first?.location(in: self) ?? .zero)
-        nodesTouched.touchReleased()
-        nodesTouched = []
-        nodesEndedOn.touchEndedOn()
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        for i in touches {
+            if i.phase == .began {
+                let loc = i.location(in: self)
+                let iTouched = nodes(at: loc)
+                iTouched.touchBegan()
+                touched[i] = iTouched
+                
+                iStartingPos[i] = loc
+                iCurrentPos[i] = loc
+                realTouchBegan(at: loc, nodes: nodesTouched)
+            }
+        }
+    }
+    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
+        for i in touches {
+            if i.phase == .moved, let currentPos = iCurrentPos[i] {
+                let loc = i.location(in: self)
+                realTouchMoved(with: .init(dx: loc.x - currentPos.x, dy: loc.y - currentPos.y))
+                iCurrentPos[i] = loc
+            }
+        }
+    }
+    
+    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) { touchesReallyEnded(touches, with: event) }
+    override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) { touchesReallyEnded(touches, with: event) }
+    func touchesReallyEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+        for i in touches {
+            if i.phase == .ended || i.phase == .cancelled, let originallyTouched = touched[i], let starting = iStartingPos[i] {
+                
+                let loc = i.location(in: self)
+                let nodesEndedOn = nodes(at: loc)
+                Array(Set(originallyTouched).subtracting(nodesEndedOn)).touchReleased()
+                //nodesTouched.touchReleased()
+                touched[i] = nil
+                nodesEndedOn.touchEndedOn()
+                realTouchEnd(at: loc, with: .init(dx: loc.x - starting.x, dy: loc.y - starting.y))
+            }
+        }
     }
     #endif
 }
