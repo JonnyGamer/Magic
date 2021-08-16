@@ -5,6 +5,18 @@
 //  Created by Jonathan Pappas on 7/31/21.
 //
 
+
+public extension SKNode {
+    func launch(launchScene: SKSceneNode.Type? = nil, launch: HostingScene) {
+        (self as? HostingNode)?.launchScene = launchScene
+        launch.scaleMode = .aspectFit
+        let foo = SKTransition.fade(with: .black, duration: 0.5)
+        foo.pausesOutgoingScene = false
+        scene?.view?.presentScene(launch, transition: foo)
+    }
+}
+
+
 public extension SKNode {
     //var width: CGFloat { frame.width }
     //var height: CGFloat { frame.height }
