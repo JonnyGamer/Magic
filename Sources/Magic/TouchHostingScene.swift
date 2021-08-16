@@ -7,13 +7,13 @@
 
 
 open class TouchHostingScene: HostingScene {
-    open var nodesTouched: [SKNode] = []
     
     open func realTouchBegan(at: CGPoint, nodes: [SKNode]) {}
     open func realTouchMoved(with: CGVector) {}
     open func realTouchEnd(at: CGPoint, with: CGVector) {}
     
     #if os(macOS)
+    open var nodesTouched: [SKNode] = []
     var startingLoc: CGPoint = .zero
     open override func mouseDown(with event: NSEvent) {
         let loc = event.location(in: self)
@@ -56,7 +56,7 @@ open class TouchHostingScene: HostingScene {
                 
                 iStartingPos[i] = loc
                 iCurrentPos[i] = loc
-                realTouchBegan(at: loc, nodes: nodesTouched)
+                realTouchBegan(at: loc, nodes: iTouched)
             }
         }
     }
