@@ -51,6 +51,9 @@ open class Button: SKNode, SuperTouchable {
     open var buttonShadow: SKShapeNode
     open var text: SKNode
     
+    public override convenience init() {
+        self.init(size: .hundred, text: "foo")
+    }
     public convenience init(size: CGSize, text: String) {
         self.init(size: size, node: SKLabelNode(text: text))
     }
