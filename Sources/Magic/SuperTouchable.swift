@@ -6,21 +6,21 @@
 //
 
 extension Array where Element == SKNode {
-    func touchBegan() {
+    public func touchBegan() {
         for i in self {
             if let io = i as? SuperTouchable {
                 io._touchBegan()
             }
         }
     }
-    func touchEndedOn() {
+    public func touchEndedOn() {
         for i in self {
             if let io = i as? SuperTouchable {
                 io._touchEndedOn()
             }
         }
     }
-    func touchReleased() {
+    public func touchReleased() {
         for i in self {
             if let io = i as? SuperTouchable {
                 io._touchReleased()
@@ -29,7 +29,7 @@ extension Array where Element == SKNode {
     }
 }
 
-@objc protocol SuperTouchable {
+@objc public protocol SuperTouchable {
     func _touchBegan()
     func _touchReleased()
     func _touchEndedOn()

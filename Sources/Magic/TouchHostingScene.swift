@@ -6,16 +6,16 @@
 //
 
 
-class TouchHostingScene: HostingScene {
-    var nodesTouched: [SKNode] = []
+open class TouchHostingScene: HostingScene {
+    open var nodesTouched: [SKNode] = []
     
-    func realTouchBegan(at: CGPoint, nodes: [SKNode]) {}
-    func realTouchMoved(with: CGVector) {}
-    func realTouchEnd(at: CGPoint, with: CGVector) {}
+    open func realTouchBegan(at: CGPoint, nodes: [SKNode]) {}
+    open func realTouchMoved(with: CGVector) {}
+    open func realTouchEnd(at: CGPoint, with: CGVector) {}
     
     #if os(macOS)
     var startingLoc: CGPoint = .zero
-    override func mouseDown(with event: NSEvent) {
+    open override func mouseDown(with event: NSEvent) {
         let loc = event.location(in: self)
         let nodesTouched = nodes(at: loc)
         nodesTouched.touchBegan()
@@ -25,12 +25,12 @@ class TouchHostingScene: HostingScene {
         realTouchBegan(at: loc, nodes: nodesTouched)
     }
     var currentPos: CGPoint = .zero
-    override func mouseDragged(with event: NSEvent) {
+    open override func mouseDragged(with event: NSEvent) {
         let loc = event.location(in: self)
         realTouchMoved(with: .init(dx: loc.x - currentPos.x, dy: loc.y - currentPos.y))
         currentPos = loc
     }
-    override func mouseUp(with event: NSEvent) {
+    open override func mouseUp(with event: NSEvent) {
         let loc = event.location(in: self)
         let nodesEndedOn = nodes(at: loc)
         Array(Set(nodesTouched).subtracting(nodesEndedOn)).touchReleased()
@@ -42,7 +42,7 @@ class TouchHostingScene: HostingScene {
     #endif
     
     #if os(iOS)
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+    open override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         let nodesTouched = nodes(at: touches.first?.location(in: self) ?? .zero)
         nodesTouched.touchBegan()
         self.nodesTouched += nodesTouched
@@ -53,7 +53,7 @@ class TouchHostingScene: HostingScene {
 //        self.nodesTouched += nodesTouched
 //    }
     
-    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+    open override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         let nodesEndedOn = nodes(at: touches.first?.location(in: self) ?? .zero)
         nodesTouched.touchReleased()
         nodesTouched = []
@@ -62,7 +62,7 @@ class TouchHostingScene: HostingScene {
     #endif
 }
 
-extension HostingScene {
+public extension HostingScene {
     func words(_ string: [String]) -> SKShapeNode {
         let text = SKLabelNode.init(text: string.reduce("") { $0 + "\n" + $1 })
         text.text?.removeFirst()

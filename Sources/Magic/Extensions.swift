@@ -5,7 +5,7 @@
 //  Created by Jonathan Pappas on 8/16/21.
 //
 
-extension CGSize {
+public extension CGSize {
     static var screen: Self {
         return .init(width: w, height: h)
     }
@@ -16,7 +16,7 @@ extension CGSize {
         return .init(width: 1 / width, height: 1 / height)
     }
 }
-extension SKAction {
+public extension SKAction {
     func easeInOut() -> SKAction {
         timingFunction = SineEaseInOut(_:)
         return self
