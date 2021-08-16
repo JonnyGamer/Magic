@@ -92,7 +92,9 @@ open class TouchHostingScene: HostingScene {
 public extension HostingScene {
     func words(_ string: [String]) -> SKShapeNode {
         let text = SKLabelNode.init(text: string.reduce("") { $0 + "\n" + $1 })
-        text.text?.removeFirst()
+        if text.text?.hasPrefix("\n") == true {
+            text.text?.removeFirst()
+        }
         text.fontName = "Hand"
         #if os(macOS)
         if #available(macOS 10.13, *) {
