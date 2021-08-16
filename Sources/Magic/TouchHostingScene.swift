@@ -42,11 +42,11 @@ open class TouchHostingScene: HostingScene {
     #endif
     
     #if os(iOS)
-    var touched: [UITouch:[SKNode]] = [:]
-    var iStartingPos: [UITouch:CGPoint] = [:]
-    var iCurrentPos: [UITouch:CGPoint] = [:]
+    open var touched: [UITouch:[SKNode]] = [:]
+    open var iStartingPos: [UITouch:CGPoint] = [:]
+    open var iCurrentPos: [UITouch:CGPoint] = [:]
     
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+    open override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         for i in touches {
             if i.phase == .began {
                 let loc = i.location(in: self)
@@ -60,7 +60,7 @@ open class TouchHostingScene: HostingScene {
             }
         }
     }
-    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
+    open override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
         for i in touches {
             if i.phase == .moved, let currentPos = iCurrentPos[i] {
                 let loc = i.location(in: self)
@@ -70,9 +70,9 @@ open class TouchHostingScene: HostingScene {
         }
     }
     
-    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) { touchesReallyEnded(touches, with: event) }
-    override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) { touchesReallyEnded(touches, with: event) }
-    func touchesReallyEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+    open override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) { touchesReallyEnded(touches, with: event) }
+    open override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) { touchesReallyEnded(touches, with: event) }
+    open func touchesReallyEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         for i in touches {
             if i.phase == .ended || i.phase == .cancelled, let originallyTouched = touched[i], let starting = iStartingPos[i] {
                 
