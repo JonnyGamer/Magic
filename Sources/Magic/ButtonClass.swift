@@ -24,7 +24,7 @@ open class Button: SKNode, SuperTouchable {
         if !touched { return }
         touched = false
         button.run(.customAction(withDuration: 0.1, actionBlock: { i, j in
-            let foo = ((j * 10 * 128) + 128)/255
+            let foo = ((j * 10 * 128) + 128)/256
             (i as? SKShapeNode)?.fillColor = .init(red: foo, green: foo, blue: foo, alpha: 1.0)
         }))
         button.run(.moveBy(x: 0, y: size.times(0.1).height, duration: 0.1).circleOut())
@@ -35,7 +35,7 @@ open class Button: SKNode, SuperTouchable {
         if !touched { return }
         touched = false
         button.run(.customAction(withDuration: 0.1, actionBlock: { i, j in
-            let foo = ((j * 10 * 128) + 128)/255
+            let foo = ((j * 10 * 128) + 128)/256
             (i as? SKShapeNode)?.fillColor = .init(red: foo, green: foo, blue: foo, alpha: 1.0)
         }))
         button.run(.moveBy(x: 0, y: size.times(0.1).height, duration: 0.1).circleOut())
