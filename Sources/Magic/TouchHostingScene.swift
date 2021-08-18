@@ -95,7 +95,7 @@ public extension HostingScene {
         if text.text?.hasPrefix("\n") == true {
             text.text?.removeFirst()
         }
-        text.fontName = "Hand"
+        //text.fontName = "Hand"
         #if os(macOS)
         if #available(macOS 10.13, *) {
             text.numberOfLines = text.text?.split(separator: "\n").count ?? 1

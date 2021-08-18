@@ -72,7 +72,7 @@ open class Button: SKNode, SuperTouchable {
                 oo.keepInside(.init(width: 1000.0, height: size.times(0.75).height))
                 oo.fontSize *= $0.xScale
                 oo.setScale(1)
-                oo.fontName = "Hand"
+                //oo.fontName = "Hand"
             } else {
                 $0.zPosition = 1
                 $0.keepInside(.init(width: 1000.0, height: size.times(0.75).height))
