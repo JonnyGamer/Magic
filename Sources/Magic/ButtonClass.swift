@@ -67,7 +67,7 @@ open class Button: SKNode, SuperTouchable {
             if $0 is SKLabelNode, let oo = $0 as? SKLabelNode {
                 oo.verticalAlignmentMode = .center
                 oo.horizontalAlignmentMode = .center
-                oo.fontColor = .black
+                //oo.fontColor = .black
                 oo.zPosition = 1
                 oo.keepInside(.init(width: 1000.0, height: size.times(0.75).height))
                 oo.fontSize *= $0.xScale
