@@ -6,6 +6,13 @@
 //
 
 open class SKSceneNode: SKCropNode {
+    
+    deinit {
+        if _DEINITS_ {
+            print("Bye \(Self.self)")
+        }
+    }
+    
     open var size: CGSize { .init(width: width, height: height) }
     open var minPoint: CGPoint { .init(x: parent!.position.x - size.halved.width, y: parent!.position.y - size.halved.height) }
     open var width: CGFloat = 0

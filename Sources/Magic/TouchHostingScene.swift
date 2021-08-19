@@ -8,6 +8,12 @@
 
 open class TouchHostingScene: HostingScene {
     
+    deinit {
+        if _DEINITS_ {
+            print("Bye \(Self.self)")
+        }
+    }
+    
     open func realTouchBegan(at: CGPoint, nodes: [SKNode]) {}
     open func realTouchMoved(with: CGVector) {}
     open func realTouchEnd(at: CGPoint, with: CGVector) {}

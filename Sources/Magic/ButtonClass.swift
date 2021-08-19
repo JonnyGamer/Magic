@@ -4,9 +4,16 @@
 //
 //  Created by Jonathan Pappas on 8/16/21.
 //
+public var _DEINITS_ = false
 
 open class Button: SKNode, SuperTouchable {
     var touched = false
+    
+    deinit {
+        if _DEINITS_ {
+            print("Bye \(Self.self)")
+        }
+    }
     
     open func _touchBegan() {
         if touched { return }

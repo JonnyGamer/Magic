@@ -22,6 +22,13 @@ public extension Stackable {
 
 
 open class HStack: SKNode, Stackable {
+    
+    deinit {
+        if _DEINITS_ {
+            print("Bye \(Self.self)")
+        }
+    }
+    
     open var orderedChildren: [SKNode] = []
     
     override init() {
@@ -65,6 +72,13 @@ open class HStack: SKNode, Stackable {
 }
 
 open class VStack: SKNode, Stackable {
+    
+    deinit {
+        if _DEINITS_ {
+            print("Bye \(Self.self)")
+        }
+    }
+    
     open var orderedChildren: [SKNode] = []
     
     public override init() {

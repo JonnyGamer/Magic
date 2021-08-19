@@ -6,6 +6,13 @@
 //
 
 open class MagicHostingNode: SKSceneNode, HostingNode {
+    
+    deinit {
+        if _DEINITS_ {
+            print("Bye \(Self.self)")
+        }
+    }
+    
     open var c: [SKNode] = []
     open override func begin() {
         backgroundColor(.black)
@@ -69,6 +76,14 @@ open class MagicHostingNode: SKSceneNode, HostingNode {
 
 //@available(macOS 10.11, *)
 open class HostingScene: SKScene, HostingNode {
+    
+    deinit {
+        if _DEINITS_ {
+            print("Bye \(Self.self)")
+        }
+    }
+    
+    
     public convenience init (screens: Int) {
         self.init(size: .init(width: w, height: h))
         self.screens = screens
