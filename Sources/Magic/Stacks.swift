@@ -26,14 +26,14 @@ open class Grid<T: SKNode>: VStack {
     open func get(x: Int, y: Int) -> T {
         return children[x-1].children[y-1] as! T
     }
-    public init(size: (x: Int, y: Int), run: (_ x: Int,_ y: Int) -> T) {
+    public init(size: (x: Int, y: Int), run: (_ x: Int,_ y: Int,_ width: Int,_ height: Int) -> T) {
         self.width = size.x
         self.height = size.y
         var highStack: [HStack] = []
         for y in 1...size.y {
             var longStack: [SKNode] = []
             for x in 1...size.x {
-                longStack.append(run(x, y))
+                longStack.append(run(x, y, width, height))
             }
             highStack.append(HStack(nodes: longStack))
         }
