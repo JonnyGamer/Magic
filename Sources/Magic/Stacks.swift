@@ -21,10 +21,14 @@ public extension Stackable {
 }
 
 open class Grid<T: SKNode>: VStack {
+    open var width: Int
+    open var height: Int
     open func get(x: Int, y: Int) -> T {
         return children[x-1].children[y-1] as! T
     }
     public init(size: (x: Int, y: Int), run: (_ x: Int,_ y: Int) -> T) {
+        self.width = size.x
+        self.height = size.y
         var highStack: [HStack] = []
         for y in 1...size.y {
             var longStack: [SKNode] = []
