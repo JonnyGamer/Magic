@@ -20,6 +20,25 @@ public extension Stackable {
     func prepend(node: SKNode) { prepend(nodes: [node]) }
 }
 
+open class Grid<T: SKNode>: VStack {
+    open func get(x: Int, y: Int) -> T {
+        return children[x-1].children[y-1] as! T
+    }
+    public init(size: (x: Int, y: Int), run: (_ x: Int,_ y: Int) -> T) {
+        var highStack: [HStack] = []
+        for y in 1...size.y {
+            var longStack: [SKNode] = []
+            for x in 1...size.x {
+                longStack.append(run(x, y))
+            }
+            highStack.append(HStack(nodes: longStack))
+        }
+        super.init(nodes: highStack)
+    }
+    required public init?(coder aDecoder: NSCoder) { fatalError("init(coder:) has not been implemented") }
+    required public init(nodes: [SKNode]) { fatalError("init(nodes:) has not been implemented") }
+}
+
 
 open class HStack: SKNode, Stackable {
     
